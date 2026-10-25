@@ -11,6 +11,15 @@ KEYS_VALIDAS = {
     "OTRA-KEY-123": "2026-06-30 12:00:00"
 }
 
+# Ruta principal para que al entrar a la URL en el navegador no dé error 404
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        "status": "online",
+        "mensaje": "Servidor de autenticacion activo"
+    }), 200
+
+# Ruta de validación para tu app de escritorio
 @app.route('/api/validar', methods=['POST'])
 def validar():
     try:
@@ -34,7 +43,7 @@ def validar():
             return jsonify({
                 "valida": False, 
                 "mensaje": "Key inválida o expirada"
-            }), 200  # Usamos 200 para que la app procese el mensaje JSON correctamente
+            }), 200
 
     except Exception as e:
         print(f"Error en el servidor: {e}")
